@@ -1,0 +1,32 @@
+here is question posted by Ankit Bansal posted on linkdin and ytube chanel
+
+link of question: https://lnkd.in/dF8vT_K7
+create table entries ( 
+name varchar(20),
+address varchar(20),
+email varchar(20),
+floor int,
+resources varchar(10));
+
+insert into entries
+values ('A','Bangalore','A@gmail.com',1,'CPU'),('A','Bangalore','A1@gmail.com',1,'CPU'),('A','Bangalore','A2@gmail.com',2,'DESKTOP')
+,('B','Bangalore','B@gmail.com',2,'DESKTOP'),('B','Bangalore','B1@gmail.com',2,'DESKTOP'),('B','Bangalore','B2@gmail.com',1,'MONITOR')
+,('A','Bangalore','B@gmail.com',1,'DESKTOP');
+
+
+------------------------------------------------
+here is my solution 
+#select name as 'name',count(name) as 'total_visit',GROUP_CONCAT(resources) as 'resources_used' from entries group by(name);
+with a as(
+select name,floor , max(a) 
+from(select name, floor, count(*)as'a' from entries group by name,floor)
+group by name)
+
+select e.name as name,
+count(e.name) as 'total_visit',
+a.floor as 'most_visited_floor',
+GROUP_CONCAT(e.resources) as 'resources_used' 
+from entries as e 
+join a on e.name=a.name group by(e.name);  
+
+
